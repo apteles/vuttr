@@ -1,0 +1,276 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "VUTTR (Very Useful Tools to Remember) API Documentation",
+        "description": "Documentation generated as a requirement",
+        "contact": {
+            "email": "andre.telestp@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "VUTTR API Server"
+        }
+    ],
+    "paths": {
+        "/api/tools": {
+            "get": {
+                "tags": [
+                    "Tools"
+                ],
+                "operationId": "indexTool",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search for global terms",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "Search for specific tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of tools."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "Store new tool",
+                "description": "Returns tool data",
+                "operationId": "storeTool",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreToolRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tool"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/tools/{tool}": {
+            "get": {
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "Get tool information",
+                "description": "Returns tool data",
+                "operationId": "getToolById",
+                "parameters": [
+                    {
+                        "name": "tool",
+                        "in": "path",
+                        "description": "Project id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tool"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "Delete existing tool",
+                "description": "Deletes a record and returns no content",
+                "operationId": "toolsProject",
+                "parameters": [
+                    {
+                        "name": "tool",
+                        "in": "path",
+                        "description": "Project id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Tag": {
+                "title": "Tag",
+                "description": "Tag model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "title of tag",
+                        "type": "string",
+                        "example": "organization"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tag"
+                }
+            },
+            "Tool": {
+                "title": "Tool",
+                "description": "Tool model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "title of the new project",
+                        "type": "string",
+                        "example": "A nice project"
+                    },
+                    "link": {
+                        "title": "link",
+                        "description": "Link of project",
+                        "type": "string",
+                        "example": "https://notion.so"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+                        "type": "string",
+                        "example": "Notion"
+                    },
+                    "tags": {
+                        "title": "Tags",
+                        "description": "Tag's tool",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tag"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tool"
+                }
+            },
+            "StoreToolRequest": {
+                "title": "Store Tool request",
+                "description": "Store Tool request body data",
+                "required": [
+                    "title",
+                    "link",
+                    "description",
+                    "tags"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Name of the new tool",
+                        "type": "string",
+                        "example": "json-server"
+                    },
+                    "link": {
+                        "title": "link",
+                        "description": "Link of the new tool",
+                        "type": "string",
+                        "example": "https://github.com/typicode/json-server"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new tool",
+                        "type": "string",
+                        "example": "Fake REST API based on a json schema. Useful for mocking and creating APIs."
+                    },
+                    "tags": {
+                        "title": "tags",
+                        "description": "Tag name",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": "rest"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Tools",
+            "description": "API Endpoints of Tools"
+        }
+    ],
+    "security": [
+        []
+    ]
+}

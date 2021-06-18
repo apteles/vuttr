@@ -40,4 +40,11 @@ class Tool extends Model
             fn ($query) => $query->where('name', 'LIKE', "%{$term}%")
         )->get();
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(fn($tool) => $tool->tags()->detach());
+    }
 }

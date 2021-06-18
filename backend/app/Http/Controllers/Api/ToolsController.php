@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ToolsResource;
+use App\Models\Tools;
 use Illuminate\Http\Request;
 
 class ToolsController extends Controller
@@ -14,17 +16,8 @@ class ToolsController extends Controller
      */
     public function index()
     {
-        return response()->json([]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $tools = Tools::all();
+        return ToolsResource::collection($tools);
     }
 
     /**
@@ -46,30 +39,8 @@ class ToolsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $tools = Tools::find($id);
+        return new ToolsResource($tools);
     }
 
     /**
@@ -80,6 +51,8 @@ class ToolsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tool = Tools::findOrFail($id);
+        $tool->delete();
+        return response()->noContent();
     }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ToolsResource;
+use App\Models\Tag;
 use App\Models\Tool;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ToolsController extends Controller
 {
@@ -18,7 +20,6 @@ class ToolsController extends Controller
     {
         $searchTag = $request->get('tags_like');
         $searchGlobal = $request->get('q');
-        $tools = null;
 
         if ($searchTag) {
             $tools = Tool::searchByTag($searchTag);
@@ -45,7 +46,22 @@ class ToolsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'title' => 'required|max:50|unique:tools',
+            'link' => 'required',
+            'description' => 'required',
+            'tags' => 'required|array'
+        ];
+
+        $dataFromRequest = $this->validate($request, $rules);
+
+        return DB::transaction(function () use ($dataFromRequest, $request) {
+            $tagIds = $request->get('tags');
+            $tagIds = array_map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id, $tagIds);
+            $tool = Tool::create($dataFromRequest);
+            $tool->tags()->sync($tagIds);
+            return new ToolsResource($tool);
+        });
     }
 
     /**

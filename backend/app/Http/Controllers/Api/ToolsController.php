@@ -12,13 +12,57 @@ use Illuminate\Support\Facades\DB;
 class ToolsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Info(
+     *      version="1.0.0",
+     *      title="VUTTR (Very Useful Tools to Remember) API Documentation",
+     *      description="Documentation generated as a requirement",
+     *      @OA\Contact(
+     *          email="andre.telestp@gmail.com"
+     *      ),
+     *      @OA\License(
+     *          name="Apache 2.0",
+     *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
+     *      )
+     * )
      *
-     * @return \Illuminate\Http\Response
-     */
+     * @OA\Server(
+     *      url=L5_SWAGGER_CONST_HOST,
+     *      description="VUTTR API Server"
+     * )
+     *
+     * @OA\Tag(
+     *     name="Tools",
+     *     description="API Endpoints of Tools"
+     * )
+     *
+    * @OA\Get(
+    *     path="/api/tools",
+    *     operationId="indexTool",
+    *     tags={"Tools"},
+    *     @OA\Response(response="200", description="Display a listing of tools."),
+    *      @OA\Parameter(
+    *          name="q",
+    *          description="Search for global terms",
+    *          required=false,
+    *          in="query",
+    *          @OA\Schema(
+    *              type="string"
+    *          )
+    *      ),
+    *      @OA\Parameter(
+    *          name="tag",
+    *          description="Search for specific tag",
+    *          required=false,
+    *          in="query",
+    *          @OA\Schema(
+    *              type="string"
+    *          )
+    *      ),
+    * )
+    */
     public function index(Request $request)
     {
-        $searchTag = $request->get('tags_like');
+        $searchTag = $request->get('tag');
         $searchGlobal = $request->get('q');
 
         if ($searchTag) {
@@ -39,10 +83,26 @@ class ToolsController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *      path="/api/tools",
+     *      operationId="storeTool",
+     *      tags={"Tools"},
+     *      summary="Store new tool",
+     *      description="Returns tool data",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/StoreToolRequest")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Tool")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      )
+     * )
      */
     public function store(Request $request)
     {
@@ -65,10 +125,31 @@ class ToolsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/api/tools/{tool}",
+     *      operationId="getToolById",
+     *      tags={"Tools"},
+     *      summary="Get tool information",
+     *      description="Returns tool data",
+     *      @OA\Parameter(
+     *          name="tool",
+     *          description="Project id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Tool")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     * )
      */
     public function show($id)
     {
@@ -77,11 +158,32 @@ class ToolsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+    * @OA\Delete(
+    *      path="/api/tools/{tool}",
+    *      operationId="toolsProject",
+    *      tags={"Tools"},
+    *      summary="Delete existing tool",
+    *      description="Deletes a record and returns no content",
+    *      @OA\Parameter(
+    *          name="tool",
+    *          description="Project id",
+    *          required=true,
+    *          in="path",
+    *          @OA\Schema(
+    *              type="integer"
+    *          )
+    *      ),
+    *      @OA\Response(
+    *          response=204,
+    *          description="Successful operation",
+    *          @OA\JsonContent()
+    *       ),
+    *      @OA\Response(
+    *          response=404,
+    *          description="Resource Not Found"
+    *      )
+    * )
+    */
     public function destroy($id)
     {
         $tool = Tool::findOrFail($id);

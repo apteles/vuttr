@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ToolsResource;
-use App\Models\Tools;
+use App\Models\Tool;
 use Illuminate\Http\Request;
 
 class ToolsController extends Controller
@@ -16,7 +16,7 @@ class ToolsController extends Controller
      */
     public function index()
     {
-        $tools = Tools::all();
+        $tools = Tool::all();
         return ToolsResource::collection($tools);
     }
 
@@ -39,7 +39,7 @@ class ToolsController extends Controller
      */
     public function show($id)
     {
-        $tools = Tools::find($id);
+        $tools = Tool::find($id);
         return new ToolsResource($tools);
     }
 
@@ -51,7 +51,7 @@ class ToolsController extends Controller
      */
     public function destroy($id)
     {
-        $tool = Tools::findOrFail($id);
+        $tool = Tool::findOrFail($id);
         $tool->delete();
         return response()->noContent();
     }

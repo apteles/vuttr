@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tools;
+use App\Models\Tag;
+use App\Models\Tool;
 use Illuminate\Database\Seeder;
 
 class ToolsTableSeeder extends Seeder
@@ -13,7 +14,10 @@ class ToolsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-         Tools::factory(10)->create();
+    {    $tags = Tag::all();
+         Tool::factory(10)->create()->each(function(Tool $tool) use ($tags){
+            $tagsId = $tags->random(5)->pluck('id')->toArray();
+            $tool->tags()->attach($tagsId);
+         });
     }
 }

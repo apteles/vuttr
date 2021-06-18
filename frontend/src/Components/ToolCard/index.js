@@ -2,12 +2,12 @@ import React from 'react';
 import searchClose from '../../assets/Icon-Close-Circle-2px.svg'
 import * as S from './styles';
 
-function ToolCard({ onDelete }) {
+function ToolCard({ onDelete, title, link, description, tags }) {
     return (
         <S.Container>
             <S.Header>
                 <S.Title>
-                    <a href="#">Notion</a>
+                    <a href={link}>{title}</a>
                 </S.Title>
                 <S.Action>
                     <button onClick={() => onDelete(1)}>
@@ -17,15 +17,12 @@ function ToolCard({ onDelete }) {
                 </S.Action>
             </S.Header>
             <S.Content>
-                <p> All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.</p>
+                <p>{description}</p>
             </S.Content>
             <S.Footer>
-                <span>#api</span>
-                <span>#json</span>
-                <span>#schema</span>
-                <span>#node</span>
-                <span>#github</span>
-                <span>#rest</span>
+                {tags.map(({ name }) => (
+                    <span>#{name}</span>
+                ))}
             </S.Footer>
         </S.Container>
     );

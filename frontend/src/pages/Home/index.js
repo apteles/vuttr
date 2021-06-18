@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './styles'
 import Container from '../../Components/Layout/Container'
 import ToolCard from '../../Components/ToolCard'
@@ -7,6 +7,7 @@ import FormTool from '../../Components/FormTool'
 import searchIcon from '../../assets/Icon-Search-2px.svg'
 import searchPlus from '../../assets/Icon-Plus-Circle-2px.svg'
 import Modal from 'react-modal';
+import axios from '../../services/api'
 
 const customStyles = {
     content: {
@@ -22,6 +23,20 @@ const customStyles = {
 function Home() {
     const [modalIsOpenForm, setModalIsOpenForm] = useState(false)
     const [modalIsOpenConfirm, setModalIsOpenConfirm] = useState(false)
+    const [tools, setTools] = useState([])
+
+    useEffect(() => {
+
+        async function loadTools() {
+            const response = await axios.get('tools');
+            const { data } = response.data
+            setTools(data)
+        }
+
+        loadTools()
+
+    }, [])
+
     return (
         <>
             <Modal
@@ -56,13 +71,10 @@ function Home() {
                         <S.Button onClick={() => setModalIsOpenForm(!modalIsOpenForm)}><img src={searchPlus} />Add</S.Button>
                     </S.Actions>
                     <S.Cards>
-                        <ToolCard onDelete={() => setModalIsOpenConfirm(!modalIsOpenConfirm)} />
-                        <ToolCard />
-                        <ToolCard />
-                        <ToolCard />
+                        {tools.map(({ id, ...rest }) => (
+                            <ToolCard key={id} {...rest} onDelete={() => setModalIsOpenConfirm(!modalIsOpenConfirm)} />
+                        ))}
                     </S.Cards>
-
-
                 </S.Content>
             </Container>
         </>

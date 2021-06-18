@@ -1,62 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# VUTTR (Very Useful Tools to Remember) (BACKEND)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Requisitos
 
-## About Laravel
+Todos os requisitos foram implementados tendo como base o [link](https://github.com/gustavo-startaideia/desafio-backend).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Tecnologias
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Laravel](<>).
+-   [Docker](<>).
+-   [Docker Compose](<>).
+-   [Mysql](<>).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Executando o projeto
 
-## Learning Laravel
+Com o `docker` >=v20.10.7 e `docker-compose` >=v1.26.2 instalado em sua máquina basta apenas executar o seguinte comando:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh
+$ docker-compose up -d
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Executado o comando acima, será criado 4 serviços.
 
-## Laravel Sponsors
+```sh
+❯ docker ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED             STATUS             PORTS                                                    NAMES
+f1aa4194c9f7   backend_nginx   "nginx -g 'daemon of…"   About an hour ago   Up About an hour   0.0.0.0:3000->80/tcp, :::3000->80/tcp                    vuttr-nginx
+09446f04c5bc   backend_app     "dockerize -template…"   About an hour ago   Up About an hour   9000/tcp                                                 vuttr-app
+9ca37e90d62e   redis:alpine    "docker-entrypoint.s…"   About an hour ago   Up About an hour   6379/tcp                                                 vuttr-redis
+c2839595105c   backend_db      "docker-entrypoint.s…"   About an hour ago   Up About an hour   33060/tcp, 0.0.0.0:33006->3306/tcp, :::33006->3306/tcp   vuttr-db
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Testes
 
-### Premium Partners
+```sh
+❯ docker-compose exec app bash -c "vendor/bin/phpunit"
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+## Ferramentas adicionais
 
-## Contributing
+Foi adicionado o PHP_CodeSniffer, com o propósito de melhorar a leitura e manter uma padronização minima.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Documentação da API
 
-## Code of Conduct
+Foi usado o swagger para prover uma documentação mais clara possível dos recursos disponíveis nesse projeto. Para acessar basta acessar o
+recurso `http://localhost:3000/api/documentation`. Após já ter executado o passo de **Executando o Projeto** mencionado nesse documento, uma página semelhante a imagem abaixo será apresentada, veja:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+![Documentação](./.docs/doc-api.png)
 
-## Security Vulnerabilities
+## Troubleshooting
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Caso ocorra algum problema relacionado a falta de alguma table no momento de fazer
+consulta pare os serviços rodando com o comando `docker-compose down` execute o comando abaixo, posteriormente suba os serviços novamente com o comando `docker-compose up`
 
-## License
+```sh
+❯ rm -rf .docker/dbdata && mkdir -p .docker/dbdata
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Licença
+
+![LICENSE](https://img.shields.io/badge/license-MIT-%23F8952D)

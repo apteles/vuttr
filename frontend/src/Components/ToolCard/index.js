@@ -2,7 +2,7 @@ import React from 'react';
 import searchClose from '../../assets/Icon-Close-Circle-2px.svg'
 import * as S from './styles';
 
-function ToolCard() {
+function ToolCard({ onDelete }) {
     return (
         <S.Container>
             <S.Header>
@@ -10,7 +10,7 @@ function ToolCard() {
                     <a href="#">Notion</a>
                 </S.Title>
                 <S.Action>
-                    <button>
+                    <button onClick={() => onDelete(1)}>
                         <img src={searchClose} />
                         remove
                     </button>

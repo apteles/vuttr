@@ -14,11 +14,28 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tools = Tool::with('tags')->get();
+        $searchTag = $request->get('tags_like');
+        $searchGlobal = $request->get('q');
+        $tools = null;
+
+        if ($searchTag) {
+            $tools = Tool::searchByTag($searchTag);
+
+            return ToolsResource::collection($tools);
+        }
+
+        if ($searchGlobal) {
+            $tools = Tool::searchGlobal($searchGlobal);
+
+            return ToolsResource::collection($tools);
+        }
+
+        $tools = Tool::all();
         return ToolsResource::collection($tools);
     }
+
 
     /**
      * Store a newly created resource in storage.

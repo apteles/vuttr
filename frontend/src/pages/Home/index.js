@@ -4,7 +4,7 @@ import Container from '../../Components/Layout/Container'
 import ToolCard from '../../Components/ToolCard'
 import Confirm from '../../Components/Confirm'
 import FormTool from '../../Components/FormTool'
-import searchIcon from '../../assets/Icon-Search-2px.svg'
+import Search from '../../Components/Search'
 import searchPlus from '../../assets/Icon-Plus-Circle-2px.svg'
 import Modal from 'react-modal';
 import axios from '../../services/api'
@@ -23,19 +23,43 @@ const customStyles = {
 function Home() {
     const [modalIsOpenForm, setModalIsOpenForm] = useState(false)
     const [modalIsOpenConfirm, setModalIsOpenConfirm] = useState(false)
+    const [searchOnlyTags, setSearchOnlyTags] = useState(false)
+    const [term, setTerm] = useState('')
     const [tools, setTools] = useState([])
 
     useEffect(() => {
+        loadTools()
+    }, [term])
 
-        async function loadTools() {
-            const response = await axios.get('tools');
-            const { data } = response.data
-            setTools(data)
+    async function loadTools() {
+        let params = {}
+        if (searchOnlyTags && term) {
+            console.log('here')
+            params = {
+                tag: term
+            }
+        }
+        if (term && !searchOnlyTags) {
+            params = {
+                q: term
+            }
         }
 
-        loadTools()
+        const response = await axios.get('tools', { params });
+        const { data } = response.data
+        setTools(data)
+    }
 
-    }, [])
+    function onSearch(term) {
+        if (term) {
+            setTerm(term)
+        }
+    }
+
+    function handleResetSearch() {
+        setTerm('')
+        setSearchOnlyTags(false)
+    }
 
     return (
         <>
@@ -60,11 +84,10 @@ function Home() {
                     <S.Actions>
                         <S.SearchContainer>
                             <S.Search>
-                                <img src={searchIcon} />
-                                <input placeholder="search" />
+                                <Search value={term} onChange={onSearch} onRefresh={() => handleResetSearch()} />
                             </S.Search>
                             <S.CheckBox>
-                                <input type="checkbox" name="tag" id="tag" />
+                                <input type="checkbox" va id="tag" checked={searchOnlyTags} onChange={() => setSearchOnlyTags(!searchOnlyTags)} />
                                 <label htmlFor="tag">search in tag only</label>
                             </S.CheckBox>
                         </S.SearchContainer>

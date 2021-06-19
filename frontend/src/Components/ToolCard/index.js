@@ -11,7 +11,7 @@ function ToolCard({ onDelete, title, link, description, tags }) {
                 </S.Title>
                 <S.Action>
                     <button onClick={() => onDelete(1)}>
-                        <img src={searchClose} />
+                        <img src={searchClose} alt="close" />
                         remove
                     </button>
                 </S.Action>
@@ -20,8 +20,8 @@ function ToolCard({ onDelete, title, link, description, tags }) {
                 <p>{description}</p>
             </S.Content>
             <S.Footer>
-                {tags.map(({ name }) => (
-                    <span>#{name}</span>
+                {tags.map(({ name }, idx) => (
+                    <span key={String(idx)}>#{name}</span>
                 ))}
             </S.Footer>
         </S.Container>

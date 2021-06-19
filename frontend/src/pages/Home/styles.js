@@ -32,16 +32,7 @@ export const Search = styled.div`
     border: 1px solid #4F4F4F;
     border-radius: 5px;
     padding: 4px 8px;
-    img {
-        height: 1.4rem;
-    }
-    input{
-        height: 1.4rem;
-        border:none;
-        color: #666360;
-        background-color: #F0F2F5;
-    }
-    
+
 `
 
 export const CheckBox = styled.div`

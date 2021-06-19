@@ -7,7 +7,7 @@ function Confirm({ onConfirm, onCancel, title }) {
         <S.Container>
             <S.Header>
                 <S.Title>
-                    <img src={searchClose} />
+                    <img src={searchClose} alt="close" />
                      Remove tool
                 </S.Title>
             </S.Header>

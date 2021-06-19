@@ -2,7 +2,7 @@ import React from 'react';
 import searchClose from '../../assets/Icon-Close-Circle-2px.svg'
 import * as S from './styles';
 
-function ToolCard({ onDelete, title, link, description, tags }) {
+function ToolCard({ onDelete, id, title, link, description, tags }) {
     return (
         <S.Container>
             <S.Header>
@@ -10,7 +10,7 @@ function ToolCard({ onDelete, title, link, description, tags }) {
                     <a href={link}>{title}</a>
                 </S.Title>
                 <S.Action>
-                    <button onClick={() => onDelete(1)}>
+                    <button onClick={() => onDelete(id)}>
                         <img src={searchClose} alt="close" />
                         remove
                     </button>

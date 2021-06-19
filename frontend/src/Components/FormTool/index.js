@@ -2,21 +2,17 @@ import React from 'react';
 import { Form, Input, Textarea } from '@rocketseat/unform'
 import * as S from './styles';
 
-function FormTool({ onCancel }) {
-
-    function handleSubmit(data) {
-        console.log(data)
-    }
+function FormTool({ onCancel, onSubmit, schema }) {
     return (
         <S.Container>
             <S.Header>
                 <S.Title>+ Add new tool</S.Title>
             </S.Header>
             <S.Content>
-                <Form onSubmit={handleSubmit}>
+                <Form schema={schema} onSubmit={onSubmit}>
                     <S.FormField>
                         <label htmlFor="">Tool Name</label>
-                        <Input name="name" />
+                        <Input name="title" />
                     </S.FormField>
                     <S.FormField>
                         <label htmlFor="">Link</label>

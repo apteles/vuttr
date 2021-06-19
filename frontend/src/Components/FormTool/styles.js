@@ -23,6 +23,9 @@ export const FormField = styled.div`
     textarea{
         height: 70px;
     }
+    span{
+        color: #F95E5A;
+    }
 `
 export const Footer = styled.footer`
     display: flex;

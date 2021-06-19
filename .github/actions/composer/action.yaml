@@ -1,5 +1,5 @@
 name: "composer-install"
 description: "Runs PHP Composer"
-run:
-  using: "Docker"
+runs:
+  using: "docker"
   image: "Dockerfile"

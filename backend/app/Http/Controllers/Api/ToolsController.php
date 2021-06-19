@@ -153,7 +153,7 @@ class ToolsController extends Controller
      */
     public function show($id)
     {
-        $tools = Tool::find($id);
+        $tools = Tool::findOrFail($id);
         return new ToolsResource($tools);
     }
 

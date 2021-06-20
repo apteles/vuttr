@@ -19,9 +19,18 @@ export const FormField = styled.div`
     }
     input{
         height: 35px;
+        border-radius: 5px;
+        border: 1px solid #EBEAED;
+        background: #EBEAED;
+        padding: 13px;
+        font-size: 1.4rem;
     }
     textarea{
         height: 70px;
+        border: 1px solid #EBEAED;
+        background: #EBEAED;
+        padding: 13px;
+        font-size: 1.4rem;
     }
     span{
         color: #F95E5A;
@@ -34,5 +43,6 @@ export const Footer = styled.footer`
 
     button{
         padding: 5px 10px;
+        margin-right: 5px;
     }
 `

@@ -1,5 +1,7 @@
 # VUTTR (Very Useful Tools to Remember) (BACKEND)
 
+[![ci](https://github.com/apteles/vuttr/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/apteles/vuttr/actions/workflows/laravel.yml)
+
 # Requisitos
 
 Todos os requisitos foram implementados tendo como base o [link](https://github.com/gustavo-startaideia/desafio-backend).
@@ -45,7 +47,7 @@ Foi adicionado o PHP_CodeSniffer, com o propósito de melhorar a leitura e mante
 Foi usado o swagger para prover uma documentação mais clara possível dos recursos disponíveis nesse projeto. Para acessar basta acessar o
 recurso `http://localhost:3000/api/documentation`. Após já ter executado o passo de **Executando o Projeto** mencionado nesse documento, uma página semelhante a imagem abaixo será apresentada, veja:
 
-![Documentação](./.docs/doc-api.png)
+![Documentação](./backend/.docs/doc-api.png)
 
 ## Troubleshooting
 

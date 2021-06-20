@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Entering in folder backend
+        run: |
+          cd backend
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - uses: ./.github/actions/composer

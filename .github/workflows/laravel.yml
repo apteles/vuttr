@@ -33,5 +33,5 @@ jobs:
         run: vendor/bin/phpunit
         working-directory: backend
       - name: Check Code Styles
-        run: vendor/bin/phpunit app
+        run: vendor/bin/phpcs app
         working-directory: backend

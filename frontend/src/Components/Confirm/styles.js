@@ -27,7 +27,9 @@ export const Footer = styled.footer`
     justify-content: flex-end;
 
     button{
-        margin-right: 10px;
+        margin-left: 10px;
         padding: 5px 10px;
+        background: transparent;
+        border-radius: 5px;
     }
 `

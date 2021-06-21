@@ -58,6 +58,24 @@ consulta pare os serviços rodando com o comando `docker-compose down` execute o
 ❯ rm -rf .docker/dbdata && mkdir -p .docker/dbdata
 ```
 
+# VUTTR (Very Useful Tools to Remember) (FRONTEND)
+
+# Requisitos
+
+Todos os requisitos foram implementados tendo como base o [link](https://github.com/gustavo-startaideia/desafio-frontend).
+
+### Tecnologias
+
+-   [React](<>).
+-   [Axios](<>).
+-   [Styled Components](<>).
+
+## Executando o projeto
+
+Ao entrar na pasta frontend execute o comando `yarn start`. Executado o comando será aberto uma janela do navegador que irá rodar na porta `3000`.
+
+Obs.: É necessário que seja iniciado o backend em um primeiro momento, posteriormente o frontend. Como o servidor está sendo executado na porta `3000`, na execução do frontend será solicitado uma confirmação para o mesmo seja aberto na próxima porta disponível, caso esteja disponível será a `3001`.
+
 ## Licença
 
 ![LICENSE](https://img.shields.io/badge/license-MIT-%23F8952D)
